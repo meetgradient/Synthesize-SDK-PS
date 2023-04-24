@@ -1,0 +1,16 @@
+.env**
+# IDEs and editors
+.vscode
+**/.vscode
+.idea
+**/.idea
+.project
+**/.project
+.classpath
+**/.classpath
+.c9/
+**/.c9/
+.launch
+.settings/
+*.sublime-workspace
+*.sw*
