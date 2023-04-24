@@ -93,4 +93,4 @@ If you have any questions or issues with the SDK, please contact support@usegrad
 - [Gradient website](https://www.meetgradient.com/)
 - [Synthesize Login](https://app.usegradient.com/login)
 - [Synthesize API documentation](https://api-docs.meetgradient.com/docs)
-- [Synthesize Swagger documentation](https://www.example.com)
+- [Synthesize Swagger documentation](https://app.usegradient.com/api-docs)

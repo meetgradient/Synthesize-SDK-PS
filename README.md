@@ -88,6 +88,7 @@ file in that directory for more information.
 If you have any questions or issues with the SDK, please contact support@usegradient.com.
 
 ## Related Links
-* https://www.meetgradient.com
-* https://app.usegradient.com/api-docs
-* https://api-docs.meetgradient.com/docs
+- [Gradient website](https://www.meetgradient.com/)
+- [Synthesize Login](https://app.usegradient.com/login)
+- [Synthesize API documentation](https://api-docs.meetgradient.com/docs)
+- [Synthesize Swagger documentation](https://app.usegradient.com/api-docs)
