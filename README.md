@@ -85,7 +85,7 @@ the README.md
 file in that directory for more information.
 
 ## Support
-If you have any questions or issues with the SDK, please contact support@usegradient.com.
+If you have any questions or issues with the SDK, please contact support@meetgradient.com.
 
 ## Related Links
 - [Gradient website](https://www.meetgradient.com/)
