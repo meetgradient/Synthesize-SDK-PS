@@ -1,15 +1,50 @@
-# Setting Up a Custom Integration in Synthesize with Gradient PowerShell SDK
-Welcome, fellow feathered friends! Are you ready to learn how to set up a custom integration in Synthesize using the Gradient PowerShell SDK? Let's get started!
+# Setting Up a Custom Integration in Synthesize with Synthesize PowerShell SDK
+Welcome, fellow feathered friends! Are you ready to learn how to set up a custom integration in Synthesize using the Synthesize PowerShell SDK? Let's get started!
 
-This comprehensive guide explains the steps involved in setting up a custom integration in Synthesize using the Gradient PowerShell SDK. It covers the necessary steps to set up a project, implement some basic functions of the vendor and Synthesize API, and schedule the script to sync usage counts automatically.
+This comprehensive guide explains the steps involved in setting up a custom integration in Synthesize using the Synthesize PowerShell SDK. It covers the necessary steps to set up a project, implement some basic functions of the vendor and Synthesize API, and schedule the script to sync usage counts automatically.
 
 ## Overview
-The project setup involves several steps, such as copying the sample environment (env) file, adding environment variables, and generating Gradient API tokens. After setting up the project, you need to implement some basic functions of the vendor API, such as invoking the vendor API, authenticating it, and getting vendor accounts and services.
+The project setup involves several steps, such as copying the sample environment (env) file, adding environment variables, and generating Synthesize API token. After setting up the project, you need to implement some basic functions of the vendor API, such as invoking the vendor API, authenticating it, and getting vendor accounts and services.
 
 Note that the Gradient Helpers are pre-built scripts that make the implementation of the vendor API easier. They help 
 with authentication, creating accounts, creating services, getting service IDs, setting unit counts, and updating integration status.
 
-## Steps
+## Step 1: Obtain the Repository
+### Option 1: Clone the Repository with Git
+Open the PowerShell terminal and navigate to the directory where you want to clone the repository. Run the following command:
+
+```powershell
+git clone https://github.com/meetgradient/Synthesize-SDK-PS.git
+```
+
+### Option 2: Download the .zip Repository
+If you don't have Git installed, you can download the .zip repository from GitHub:
+
+1. Visit https://github.com/meetgradient/Synthesize-SDK-PS
+2. Click on the green "Code" button and choose "Download ZIP"
+3. Extract the contents of the .zip file to your desired directory
+
+## Step 2: Import Module
+
+After downloading or cloning the Synthesize SDK, you need to import the module before running commands like sync-accounts and others.
+
+To import the module, navigate to the Synthesize-SDK-PS directory in the PowerShell terminal:
+
+```powershell
+cd C:\Users\YourUsername\Documents\GitHub\Synthesize-SDK-PS
+```
+
+Then, import the module by running the following command:
+
+```powershell
+Import-Module .\PSMain.ps1
+```
+
+Now you can run the commands like sync-accounts, sync-services, and other commands. For example:
+
+```powershell
+pwsh -File "PSMain.ps1" sync-accounts
+```
 
 ### Step 1: Copy the Sample Environment (.env) File
 The first step is to copy the sample env file and rename it to .env. The .env file contains environment variables required for the project. You can modify these environment variables as per your requirements.
@@ -17,7 +52,7 @@ The first step is to copy the sample env file and rename it to .env. The .env fi
 ### Step 2: Add Environment Variables
 The next step is to add environment variables to the .env file. You can refer to the vendor API documentation for further information on how to acquire vendor credentials.
 
-To obtain the Gradient API tokens, follow these steps:
+To obtain the Synthesize API tokens, follow these steps:
 
 - [Login to Synthesize](https://app.usegradient.com/login)
 - Navigate to Integrations
@@ -26,6 +61,9 @@ To obtain the Gradient API tokens, follow these steps:
 - Click Generate API Tokens to generate Vendor and Partner API Tokens
 - Copy and save these tokens in a secure location, as they will be unavailable later and need to be regenerated if lost.
 - Copy and paste the Vendor and Partner API tokens into environment variables in the .env file.
+- For more information on how to obtain vendor API credentials
+
+Refer to the vendor API documentation or the README.mb file in each of the integrations directories for further information on how to acquire vendor credentials and add them to the .env file.
 
 ### Step 3: Implement the Vendor API
 After setting up the environment variables, you need to implement the vendor API. The vendor API can be implemented using PowerShell. The following steps explain how to implement some basic functions of the vendor API:
@@ -34,13 +72,25 @@ After setting up the environment variables, you need to implement the vendor API
 The Invoke-VendorAPI function is used to invoke the vendor API. You need to add custom authentication, headers required for requests, or pagination to the function. Before calling the function, you need to validate the environment variables required for the API.
 
 #### AuthenticateVendorAPI
-The AuthenticateVendorAPI function is used to test authentication for the vendor API. You can use the Invoke-VendorAPI function to complete the request. You can test the implementation by running `pwsh -File "PSMain.ps1" authenticate`.
+The AuthenticateVendorAPI function is used to test authentication for the vendor API. You can use the Invoke-VendorAPI function to complete the request. You can test the implementation by running:
+
+```powershell
+pwsh -File "PSMain.ps1" authenticate
+```
 
 #### Invoke-SyncAccounts
-The Invoke-SyncAccounts function is used to get all the accounts in the vendor, format them, and then return them. You can test the implementation by running `pwsh -File "PSMain.ps1" sync-accounts`.
+The Invoke-SyncAccounts function is used to get all the accounts in the vendor, format them, and then return them. You can test the implementation by running: 
+
+```powershell
+pwsh -File "PSMain.ps1" sync-accounts
+```
 
 #### Invoke-SyncServices
-The Invoke-SyncServices function is used to get all the services for the vendor. Currently, only the name of the service is needed. Within PSCreateServicesFromVendor, the description, support URL, and contact can be updated. You can test the implementation by running `pwsh -File "PSMain.ps1" sync-services`.
+The Invoke-SyncServices function is used to get all the services for the vendor. Currently, only the name of the service is needed. Within PSCreateServicesFromVendor, the description, support URL, and contact can be updated. You can test the implementation by running:
+
+```powershell
+pwsh -File "PSMain.ps1" sync-services
+```
 
 #### Invoke-UpdateStatus
 The Invoke-UpdateStatus function is used to update the integration status of an integration. It is required that you update the integration status to "pending" to map services in Synthesize.
@@ -55,7 +105,7 @@ Note that it is normal to encounter 404 errors when performing the Set unit coun
 
 Sample Response
 
-```
+```powershell
 {
   "statusCode": 404,
   "message": "No account map found with id: 1"
@@ -77,7 +127,7 @@ By scheduling the script to run automatically, you can ensure that your usage co
 ### Conclusion
 Well, it looks like we've reached the end of our flight!
 
-By following the steps outlined in this guide, you'll be soaring high with a custom integration in Synthesize using the Gradient PowerShell SDK.
+By following the steps outlined in this guide, you'll be soaring high with a custom integration in Synthesize using the Synthesize PowerShell SDK.
 
 Remember, these are just templates, so don't be afraid to ruffle some feathers and customize them to meet your 
 specific needs. With the Gradient Helpers and the Invoke-SyncUsage function, syncing usage counts will be as easy as a 
