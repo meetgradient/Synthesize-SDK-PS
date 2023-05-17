@@ -53,6 +53,68 @@ The following functions are available in this template(found in `PSCustomIntegra
   - `update-status`
 - The script will use the SDK to connect to the service and perform the specified operations.
 
+## Sample Responses
+#### Token
+```
+{
+    "access_token": "<TOKEN>",
+    "token_type": "bearer",
+    "refresh_token": "<REFRESH TOKEN>",
+    "mfa_token": null,
+    "encrypted_code": null,
+    "expires_in": 3600
+}
+```
+#### Companies
+```
+{
+    "data": [
+        {
+            "name": "FooBar",
+            "instanceUid": "<UID>",
+            "status": "Active"
+        },
+    ],
+    "meta": {
+        "pagingInfo": {
+            "total": 1,
+            "count": 0,
+            "offset": 0
+        }
+    }
+}
+```
+#### Services/Usage
+```
+{
+    "meta": {
+        "pagingInfo": {
+            "total": 1,
+            "count": 0,
+            "offset": 0
+        }
+    },
+    "data": [
+        {
+            "companyUid": "<Company.instanceUid>",
+            "resellerUid": null,
+            "locationUid": "<Location.Uid>",
+            "date": "2023-05-17T00:00:00.0000000+00:00",
+            "counters": [
+                {
+                    "value": 0,
+                    "type": "VmCloudBackups"
+                },
+                {
+                    "value": 0,
+                    "type": "ServerCloudBackups"
+                },
+            ]
+        }
+    ]
+}
+```
+
 ## Examples
 Within the Integrations Directory there are many examples of our integrations making use of this template! Feel free 
 to use them as a reference.
