@@ -10,7 +10,7 @@ function Invoke-CreateAccounts {
         foreach ($Account in $VendorAccounts.GetEnumerator())
         {
 
-            $AccountExists = false
+            $AccountExists = $false
             if($GradientAccounts) {
                 $AccountExists = $GradientAccounts | Where-Object { $_.id -eq $Account.Value.id }
             }
