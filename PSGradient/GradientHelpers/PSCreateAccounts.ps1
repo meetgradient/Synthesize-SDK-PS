@@ -9,12 +9,8 @@ function Invoke-CreateAccounts {
 
         foreach ($Account in $VendorAccounts.GetEnumerator())
         {
-
-            $AccountExists = $false
-            if($GradientAccounts) {
-                $AccountExists = $GradientAccounts | Where-Object { $_.id -eq $Account.Value.id }
-            }
-            if (!$accountExists)
+            $AccountExists = $GradientAccounts | Where-Object { $_.id -eq $Account.Value.id }
+            if (!$AccountExists -and $Account.Value.id)
             {
                 $CreateAccountMappingDto = Initialize-PSCreateMappingProperty $Account.Value.name "" $Account.Value.id.ToString()
                 New-PSAccount $CreateAccountMappingDto

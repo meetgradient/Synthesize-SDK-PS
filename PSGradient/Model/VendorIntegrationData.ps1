@@ -29,11 +29,11 @@ function Initialize-PSVendorIntegrationData {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
-        [ValidateSet("active", "inactive", "pending", "disabled", "error")]
+        [ValidateSet("active", "inactive", "pending")]
         [PSCustomObject]
         ${Status},
         [Parameter(Position = 1, ValueFromPipelineByPropertyName = $true)]
-        [ValidateSet("active", "inactive", "pending", "disabled", "error")]
+        [ValidateSet("active", "inactive", "pending")]
         [PSCustomObject]
         ${ExternalIntegrationStatus},
         [Parameter(Position = 2, ValueFromPipelineByPropertyName = $true)]

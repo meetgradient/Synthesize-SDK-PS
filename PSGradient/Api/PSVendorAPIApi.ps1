@@ -194,6 +194,89 @@ function New-PSBilling {
 <#
 .SYNOPSIS
 
+Create Service for a Vendor for an Organization
+
+.DESCRIPTION
+
+No description available.
+
+.PARAMETER CreateMappingProperty
+No description available.
+
+.PARAMETER WithHttpInfo
+
+A switch when turned on will return a hash table of Response, StatusCode and Headers instead of just the Response
+
+.OUTPUTS
+
+UpdateMappingPropertyResponse[]
+#>
+function New-PSServiceMappingObject {
+    [CmdletBinding()]
+    Param (
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [PSCustomObject[]]
+        ${CreateMappingProperty},
+        [Switch]
+        $WithHttpInfo
+    )
+
+    Process {
+        'Calling method: New-PSServiceMappingObject' | Write-Debug
+        $PSBoundParameters | Out-DebugParameter | Write-Debug
+
+        $LocalVarAccepts = @()
+        $LocalVarContentTypes = @()
+        $LocalVarQueryParameters = @{}
+        $LocalVarHeaderParameters = @{}
+        $LocalVarFormParameters = @{}
+        $LocalVarPathParameters = @{}
+        $LocalVarCookieParameters = @{}
+        $LocalVarBodyParameter = $null
+
+        $Configuration = Get-PSConfiguration
+        # HTTP header 'Accept' (if needed)
+        $LocalVarAccepts = @('application/json')
+
+        # HTTP header 'Content-Type'
+        $LocalVarContentTypes = @('application/json')
+
+        $LocalVarUri = '/api/vendor-api/organization/services'
+
+        if (!$CreateMappingProperty) {
+            throw "Error! The required parameter `CreateMappingProperty` missing when calling createServiceMappingObject."
+        }
+
+        $LocalVarBodyParameter = ,$CreateMappingProperty | ConvertTo-Json -Depth 100
+
+        if ($Configuration["ApiKey"] -and $Configuration["ApiKey"]["Gradient-Token"]) {
+            $LocalVarHeaderParameters['Gradient-Token'] = $Configuration["ApiKey"]["Gradient-Token"]
+            Write-Verbose ("Using API key 'Gradient-Token' in the header for authentication in {0}" -f $MyInvocation.MyCommand)
+        }
+
+        $LocalVarResult = Invoke-PSApiClient -Method 'POST' `
+                                -Uri $LocalVarUri `
+                                -Accepts $LocalVarAccepts `
+                                -ContentTypes $LocalVarContentTypes `
+                                -Body $LocalVarBodyParameter `
+                                -HeaderParameters $LocalVarHeaderParameters `
+                                -QueryParameters $LocalVarQueryParameters `
+                                -FormParameters $LocalVarFormParameters `
+                                -CookieParameters $LocalVarCookieParameters `
+                                -ReturnType "UpdateMappingPropertyResponse[]" `
+                                -IsBodyNullable $false
+
+        if ($WithHttpInfo.IsPresent) {
+            return $LocalVarResult
+        } else {
+            return $LocalVarResult["Response"]
+        }
+    }
+}
+
+<#
+.SYNOPSIS
+
 Create Service for a Vendor
 
 .DESCRIPTION
@@ -277,11 +360,17 @@ function New-PSVendorService {
 <#
 .SYNOPSIS
 
-Get Accounts
+Get Organization Accounts
 
 .DESCRIPTION
 
 No description available.
+
+.PARAMETER AccountIds
+Use to fetch specific accounts by id. Defaults to fetching all accounts.
+
+.PARAMETER ReturnUnmapped
+Use to only return mapped accounts. Defaults to true which returns all accounts.
 
 .PARAMETER WithHttpInfo
 
@@ -294,6 +383,12 @@ GetMappingPropertyResponse[]
 function Get-PSAccounts {
     [CmdletBinding()]
     Param (
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [String[]]
+        ${AccountIds},
+        [Parameter(Position = 1, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [PSCustomObject]
+        ${ReturnUnmapped},
         [Switch]
         $WithHttpInfo
     )
@@ -316,6 +411,14 @@ function Get-PSAccounts {
         $LocalVarAccepts = @('application/json')
 
         $LocalVarUri = '/api/vendor-api/organization/accounts'
+
+        if ($AccountIds) {
+            $LocalVarQueryParameters['accountIds'] = $AccountIds
+        }
+
+        if ($ReturnUnmapped) {
+            $LocalVarQueryParameters['returnUnmapped'] = $ReturnUnmapped
+        }
 
         if ($Configuration["ApiKey"] -and $Configuration["ApiKey"]["Gradient-Token"]) {
             $LocalVarHeaderParameters['Gradient-Token'] = $Configuration["ApiKey"]["Gradient-Token"]
@@ -501,6 +604,94 @@ function Get-PSIntegration {
 <#
 .SYNOPSIS
 
+Get Organization Services
+
+.DESCRIPTION
+
+No description available.
+
+.PARAMETER ServiceIds
+Use to fetch specific services by id. Defaults to fetching all services.
+
+.PARAMETER ReturnUnmapped
+Use to only return mapped services. Defaults to true which returns all services.
+
+.PARAMETER WithHttpInfo
+
+A switch when turned on will return a hash table of Response, StatusCode and Headers instead of just the Response
+
+.OUTPUTS
+
+GetMappingPropertyResponse[]
+#>
+function Get-PSServices {
+    [CmdletBinding()]
+    Param (
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [String[]]
+        ${ServiceIds},
+        [Parameter(Position = 1, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [PSCustomObject]
+        ${ReturnUnmapped},
+        [Switch]
+        $WithHttpInfo
+    )
+
+    Process {
+        'Calling method: Get-PSServices' | Write-Debug
+        $PSBoundParameters | Out-DebugParameter | Write-Debug
+
+        $LocalVarAccepts = @()
+        $LocalVarContentTypes = @()
+        $LocalVarQueryParameters = @{}
+        $LocalVarHeaderParameters = @{}
+        $LocalVarFormParameters = @{}
+        $LocalVarPathParameters = @{}
+        $LocalVarCookieParameters = @{}
+        $LocalVarBodyParameter = $null
+
+        $Configuration = Get-PSConfiguration
+        # HTTP header 'Accept' (if needed)
+        $LocalVarAccepts = @('application/json')
+
+        $LocalVarUri = '/api/vendor-api/organization/services'
+
+        if ($ServiceIds) {
+            $LocalVarQueryParameters['serviceIds'] = $ServiceIds
+        }
+
+        if ($ReturnUnmapped) {
+            $LocalVarQueryParameters['returnUnmapped'] = $ReturnUnmapped
+        }
+
+        if ($Configuration["ApiKey"] -and $Configuration["ApiKey"]["Gradient-Token"]) {
+            $LocalVarHeaderParameters['Gradient-Token'] = $Configuration["ApiKey"]["Gradient-Token"]
+            Write-Verbose ("Using API key 'Gradient-Token' in the header for authentication in {0}" -f $MyInvocation.MyCommand)
+        }
+
+        $LocalVarResult = Invoke-PSApiClient -Method 'GET' `
+                                -Uri $LocalVarUri `
+                                -Accepts $LocalVarAccepts `
+                                -ContentTypes $LocalVarContentTypes `
+                                -Body $LocalVarBodyParameter `
+                                -HeaderParameters $LocalVarHeaderParameters `
+                                -QueryParameters $LocalVarQueryParameters `
+                                -FormParameters $LocalVarFormParameters `
+                                -CookieParameters $LocalVarCookieParameters `
+                                -ReturnType "GetMappingPropertyResponse[]" `
+                                -IsBodyNullable $false
+
+        if ($WithHttpInfo.IsPresent) {
+            return $LocalVarResult
+        } else {
+            return $LocalVarResult["Response"]
+        }
+    }
+}
+
+<#
+.SYNOPSIS
+
 Get Vendor
 
 .DESCRIPTION
@@ -656,7 +847,7 @@ No description available.
 .PARAMETER AccountId
 Vendor accountId as provided in the POST request when creating the account.
 
-.PARAMETER UpdateVendorAccountRequest
+.PARAMETER UpdateVendorPropertyRequest
 No description available.
 
 .PARAMETER WithHttpInfo
@@ -675,7 +866,7 @@ function Update-PSAccount {
         ${AccountId},
         [Parameter(Position = 1, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
         [PSCustomObject]
-        ${UpdateVendorAccountRequest},
+        ${UpdateVendorPropertyRequest},
         [Switch]
         $WithHttpInfo
     )
@@ -706,11 +897,11 @@ function Update-PSAccount {
         }
         $LocalVarUri = $LocalVarUri.replace('{accountId}', [System.Web.HTTPUtility]::UrlEncode($AccountId))
 
-        if (!$UpdateVendorAccountRequest) {
-            throw "Error! The required parameter `UpdateVendorAccountRequest` missing when calling updateAccount."
+        if (!$UpdateVendorPropertyRequest) {
+            throw "Error! The required parameter `UpdateVendorPropertyRequest` missing when calling updateAccount."
         }
 
-        $LocalVarBodyParameter = $UpdateVendorAccountRequest | ConvertTo-Json -Depth 100
+        $LocalVarBodyParameter = $UpdateVendorPropertyRequest | ConvertTo-Json -Depth 100
 
         if ($Configuration["ApiKey"] -and $Configuration["ApiKey"]["Gradient-Token"]) {
             $LocalVarHeaderParameters['Gradient-Token'] = $Configuration["ApiKey"]["Gradient-Token"]
@@ -805,6 +996,99 @@ function Update-PSIntegrationStatus {
                                 -FormParameters $LocalVarFormParameters `
                                 -CookieParameters $LocalVarCookieParameters `
                                 -ReturnType "UpdateIntegrationStatusResponse" `
+                                -IsBodyNullable $false
+
+        if ($WithHttpInfo.IsPresent) {
+            return $LocalVarResult
+        } else {
+            return $LocalVarResult["Response"]
+        }
+    }
+}
+
+<#
+.SYNOPSIS
+
+Update Service
+
+.DESCRIPTION
+
+No description available.
+
+.PARAMETER ServiceId
+Vendor serviceId as provided in the POST request when updating the service.
+
+.PARAMETER UpdateVendorPropertyRequest
+No description available.
+
+.PARAMETER WithHttpInfo
+
+A switch when turned on will return a hash table of Response, StatusCode and Headers instead of just the Response
+
+.OUTPUTS
+
+UpdateMappingPropertyResponse
+#>
+function Update-PSService {
+    [CmdletBinding()]
+    Param (
+        [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [String]
+        ${ServiceId},
+        [Parameter(Position = 1, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
+        [PSCustomObject]
+        ${UpdateVendorPropertyRequest},
+        [Switch]
+        $WithHttpInfo
+    )
+
+    Process {
+        'Calling method: Update-PSService' | Write-Debug
+        $PSBoundParameters | Out-DebugParameter | Write-Debug
+
+        $LocalVarAccepts = @()
+        $LocalVarContentTypes = @()
+        $LocalVarQueryParameters = @{}
+        $LocalVarHeaderParameters = @{}
+        $LocalVarFormParameters = @{}
+        $LocalVarPathParameters = @{}
+        $LocalVarCookieParameters = @{}
+        $LocalVarBodyParameter = $null
+
+        $Configuration = Get-PSConfiguration
+        # HTTP header 'Accept' (if needed)
+        $LocalVarAccepts = @('application/json')
+
+        # HTTP header 'Content-Type'
+        $LocalVarContentTypes = @('application/json')
+
+        $LocalVarUri = '/api/vendor-api/organization/services/{serviceId}'
+        if (!$ServiceId) {
+            throw "Error! The required parameter `ServiceId` missing when calling updateService."
+        }
+        $LocalVarUri = $LocalVarUri.replace('{serviceId}', [System.Web.HTTPUtility]::UrlEncode($ServiceId))
+
+        if (!$UpdateVendorPropertyRequest) {
+            throw "Error! The required parameter `UpdateVendorPropertyRequest` missing when calling updateService."
+        }
+
+        $LocalVarBodyParameter = $UpdateVendorPropertyRequest | ConvertTo-Json -Depth 100
+
+        if ($Configuration["ApiKey"] -and $Configuration["ApiKey"]["Gradient-Token"]) {
+            $LocalVarHeaderParameters['Gradient-Token'] = $Configuration["ApiKey"]["Gradient-Token"]
+            Write-Verbose ("Using API key 'Gradient-Token' in the header for authentication in {0}" -f $MyInvocation.MyCommand)
+        }
+
+        $LocalVarResult = Invoke-PSApiClient -Method 'PATCH' `
+                                -Uri $LocalVarUri `
+                                -Accepts $LocalVarAccepts `
+                                -ContentTypes $LocalVarContentTypes `
+                                -Body $LocalVarBodyParameter `
+                                -HeaderParameters $LocalVarHeaderParameters `
+                                -QueryParameters $LocalVarQueryParameters `
+                                -FormParameters $LocalVarFormParameters `
+                                -CookieParameters $LocalVarCookieParameters `
+                                -ReturnType "UpdateMappingPropertyResponse" `
                                 -IsBodyNullable $false
 
         if ($WithHttpInfo.IsPresent) {

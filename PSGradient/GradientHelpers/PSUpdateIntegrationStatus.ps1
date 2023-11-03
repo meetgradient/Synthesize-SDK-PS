@@ -2,7 +2,10 @@ Function Invoke-UpdateStatus {
     Param(
     ) Process {
         try {
-            $response = Update-PSIntegrationStatus "pending"
+            $integration = Get-PSIntegration
+            if($integration.status -ne "active") {
+                $response = Update-PSIntegrationStatus "pending"
+            }
             Write-Host "Response  ${response}"
         } catch {
             Write-Error $_
