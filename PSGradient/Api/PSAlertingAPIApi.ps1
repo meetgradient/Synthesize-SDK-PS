@@ -28,7 +28,7 @@ A switch when turned on will return a hash table of Response, StatusCode and Hea
 
 AlertCreatedDto
 #>
-function Invoke-PSAlertingControllerCreateTicket {
+function Invoke-PSAlertingControllerDispatchAlert {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true, Mandatory = $false)]
@@ -42,7 +42,7 @@ function Invoke-PSAlertingControllerCreateTicket {
     )
 
     Process {
-        'Calling method: Invoke-PSAlertingControllerCreateTicket' | Write-Debug
+        'Calling method: Invoke-PSAlertingControllerDispatchAlert' | Write-Debug
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $LocalVarAccepts = @()
@@ -63,12 +63,12 @@ function Invoke-PSAlertingControllerCreateTicket {
 
         $LocalVarUri = '/api/vendor-api/alerting/{accountId}'
         if (!$AccountId) {
-            throw "Error! The required parameter `AccountId` missing when calling alertingControllerCreateTicket."
+            throw "Error! The required parameter `AccountId` missing when calling alertingControllerDispatchAlert."
         }
         $LocalVarUri = $LocalVarUri.replace('{accountId}', [System.Web.HTTPUtility]::UrlEncode($AccountId))
 
         if (!$CreateAlertingDto) {
-            throw "Error! The required parameter `CreateAlertingDto` missing when calling alertingControllerCreateTicket."
+            throw "Error! The required parameter `CreateAlertingDto` missing when calling alertingControllerDispatchAlert."
         }
 
         $LocalVarBodyParameter = $CreateAlertingDto | ConvertTo-Json -Depth 100

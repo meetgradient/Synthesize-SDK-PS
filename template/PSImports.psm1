@@ -10,8 +10,10 @@ Import-Module -Name $SdkDir
 . "${SdkDir}\GradientHelpers\PSAuthenticate.ps1"
 . "${SdkDir}\GradientHelpers\PSCreateAccounts.ps1"
 . "${SdkDir}\GradientHelpers\PSCreateServices.ps1"
+. "${SdkDir}\GradientHelpers\PSCreateServiceMappings.ps1"
 . "${SdkDir}\GradientHelpers\PSUpdateIntegrationStatus.ps1"
 . "${SdkDir}\GradientHelpers\PSInvokeGetServiceIds.ps1"
+. "${SdkDir}\GradientHelpers\PSInvokeGetServiceMappingIds.ps1"
 . "${SdkDir}\GradientHelpers\PSBuildGradientToken.ps1"
 #Add other imports here
 Get-Module

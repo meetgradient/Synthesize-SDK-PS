@@ -20,6 +20,7 @@ function Invoke-CreateServices {
                 $CreatedServices++
             }
         }
+        Invoke-UpdateStatus
     }
     catch {
         throw "An error occurred while creating service: $_"

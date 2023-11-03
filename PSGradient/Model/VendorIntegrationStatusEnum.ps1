@@ -22,9 +22,5 @@ enum VendorIntegrationStatusEnum {
     inactive
     # enum value: "pending"
     pending
-    # enum value: "disabled"
-    disabled
-    # enum value: "error"
-    error
 }
 

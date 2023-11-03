@@ -14,50 +14,40 @@ No summary available.
 
 No description available.
 
-.PARAMETER Name
-The name of the property
-.PARAMETER Description
-A description of the property
 .PARAMETER Id
-The property id
-.PARAMETER IsMapped
-Whether or not this property is mapped
+No description available.
+.PARAMETER Name
+No description available.
+.PARAMETER Description
+No description available.
 .OUTPUTS
 
-GetMappingPropertyResponse<PSCustomObject>
+UpdateVendorPropertyRequest<PSCustomObject>
 #>
 
-function Initialize-PSGetMappingPropertyResponse {
+function Initialize-PSUpdateVendorPropertyRequest {
     [CmdletBinding()]
     Param (
         [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
         [String]
-        ${Name},
+        ${Id},
         [Parameter(Position = 1, ValueFromPipelineByPropertyName = $true)]
         [String]
-        ${Description},
+        ${Name},
         [Parameter(Position = 2, ValueFromPipelineByPropertyName = $true)]
         [String]
-        ${Id},
-        [Parameter(Position = 3, ValueFromPipelineByPropertyName = $true)]
-        [Boolean]
-        ${IsMapped}
+        ${Description}
     )
 
     Process {
-        'Creating PSCustomObject: PSGradient => PSGetMappingPropertyResponse' | Write-Debug
+        'Creating PSCustomObject: PSGradient => PSUpdateVendorPropertyRequest' | Write-Debug
         $PSBoundParameters | Out-DebugParameter | Write-Debug
-
-        if ($null -eq $IsMapped) {
-            throw "invalid value for 'IsMapped', 'IsMapped' cannot be null."
-        }
 
 
         $PSO = [PSCustomObject]@{
+            "id" = ${Id}
             "name" = ${Name}
             "description" = ${Description}
-            "id" = ${Id}
-            "isMapped" = ${IsMapped}
         }
 
 
@@ -68,11 +58,11 @@ function Initialize-PSGetMappingPropertyResponse {
 <#
 .SYNOPSIS
 
-Convert from JSON to GetMappingPropertyResponse<PSCustomObject>
+Convert from JSON to UpdateVendorPropertyRequest<PSCustomObject>
 
 .DESCRIPTION
 
-Convert from JSON to GetMappingPropertyResponse<PSCustomObject>
+Convert from JSON to UpdateVendorPropertyRequest<PSCustomObject>
 
 .PARAMETER Json
 
@@ -80,36 +70,32 @@ Json object
 
 .OUTPUTS
 
-GetMappingPropertyResponse<PSCustomObject>
+UpdateVendorPropertyRequest<PSCustomObject>
 #>
-function ConvertFrom-PSJsonToGetMappingPropertyResponse {
+function ConvertFrom-PSJsonToUpdateVendorPropertyRequest {
     Param(
         [AllowEmptyString()]
         [string]$Json
     )
 
     Process {
-        'Converting JSON to PSCustomObject: PSGradient => PSGetMappingPropertyResponse' | Write-Debug
+        'Converting JSON to PSCustomObject: PSGradient => PSUpdateVendorPropertyRequest' | Write-Debug
         $PSBoundParameters | Out-DebugParameter | Write-Debug
 
         $JsonParameters = ConvertFrom-Json -InputObject $Json
 
-        # check if Json contains properties not defined in PSGetMappingPropertyResponse
-        $AllProperties = ("name", "description", "id", "isMapped")
+        # check if Json contains properties not defined in PSUpdateVendorPropertyRequest
+        $AllProperties = ("id", "name", "description")
         foreach ($name in $JsonParameters.PsObject.Properties.Name) {
             if (!($AllProperties.Contains($name))) {
                 throw "Error! JSON key '$name' not found in the properties: $($AllProperties)"
             }
         }
 
-        If ([string]::IsNullOrEmpty($Json) -or $Json -eq "{}") { # empty json
-            throw "Error! Empty JSON cannot be serialized due to the required property 'isMapped' missing."
-        }
-
-        if (!([bool]($JsonParameters.PSobject.Properties.name -match "isMapped"))) {
-            throw "Error! JSON cannot be serialized due to the required property 'isMapped' missing."
+        if (!([bool]($JsonParameters.PSobject.Properties.name -match "id"))) { #optional property not found
+            $Id = $null
         } else {
-            $IsMapped = $JsonParameters.PSobject.Properties["isMapped"].value
+            $Id = $JsonParameters.PSobject.Properties["id"].value
         }
 
         if (!([bool]($JsonParameters.PSobject.Properties.name -match "name"))) { #optional property not found
@@ -124,17 +110,10 @@ function ConvertFrom-PSJsonToGetMappingPropertyResponse {
             $Description = $JsonParameters.PSobject.Properties["description"].value
         }
 
-        if (!([bool]($JsonParameters.PSobject.Properties.name -match "id"))) { #optional property not found
-            $Id = $null
-        } else {
-            $Id = $JsonParameters.PSobject.Properties["id"].value
-        }
-
         $PSO = [PSCustomObject]@{
+            "id" = ${Id}
             "name" = ${Name}
             "description" = ${Description}
-            "id" = ${Id}
-            "isMapped" = ${IsMapped}
         }
 
         return $PSO

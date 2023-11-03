@@ -4,7 +4,7 @@ Function Invoke-SyncUsage {
         try {
             Write-Host "Starting call"
             $VendorAccounts = Get-AllAccountsFromVendor
-            $ServiceIds = Invoke-GetServiceIds #Service IDs created in GradientMSP to associate to the correct Vendor Service
+            $ServiceIds = Invoke-GetServiceMappingIds #Service IDs created in GradientMSP to associate to the correct Vendor Service
             foreach ($site in $VendorAccounts.GetEnumerator()) {
                 #Get Active Licenses
                 $UsageCount = Get-AccountUsage $site.Value.id
