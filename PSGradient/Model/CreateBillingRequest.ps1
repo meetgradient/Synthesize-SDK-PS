@@ -36,7 +36,10 @@ function Initialize-PSCreateBillingRequest {
         ${AccountId},
         [Parameter(Position = 2, ValueFromPipelineByPropertyName = $true)]
         [Decimal]
-        ${UnitCount}
+        ${UnitCount},
+        # This was added and will be deleted when regenerated. 
+        [String]
+        ${UnitType}
     )
 
     Process {
@@ -46,6 +49,12 @@ function Initialize-PSCreateBillingRequest {
         if ($null -eq $UnitCount) {
             throw "invalid value for 'UnitCount', 'UnitCount' cannot be null."
         }
+
+        # This was added and will be deleted when SDK is regenerated
+        if ($attributes.ContainsKey('STORAGE_UNIT_TYPE') -and $UnitType -eq "bytes") {
+            $UnitCount = Convert-BytesToUnit $attributes['STORAGE_UNIT_TYPE'] $UnitCount
+        }
+        # End of code to be copied over when SDK is regenerated. 
 
 
         $PSO = [PSCustomObject]@{
@@ -96,25 +105,31 @@ function ConvertFrom-PSJsonToCreateBillingRequest {
             }
         }
 
-        If ([string]::IsNullOrEmpty($Json) -or $Json -eq "{}") { # empty json
+        If ([string]::IsNullOrEmpty($Json) -or $Json -eq "{}") {
+            # empty json
             throw "Error! Empty JSON cannot be serialized due to the required property 'unitCount' missing."
         }
 
         if (!([bool]($JsonParameters.PSobject.Properties.name -match "unitCount"))) {
             throw "Error! JSON cannot be serialized due to the required property 'unitCount' missing."
-        } else {
+        }
+        else {
             $UnitCount = $JsonParameters.PSobject.Properties["unitCount"].value
         }
 
-        if (!([bool]($JsonParameters.PSobject.Properties.name -match "clientOId"))) { #optional property not found
+        if (!([bool]($JsonParameters.PSobject.Properties.name -match "clientOId"))) {
+            #optional property not found
             $ClientOId = $null
-        } else {
+        }
+        else {
             $ClientOId = $JsonParameters.PSobject.Properties["clientOId"].value
         }
 
-        if (!([bool]($JsonParameters.PSobject.Properties.name -match "accountId"))) { #optional property not found
+        if (!([bool]($JsonParameters.PSobject.Properties.name -match "accountId"))) {
+            #optional property not found
             $AccountId = $null
-        } else {
+        }
+        else {
             $AccountId = $JsonParameters.PSobject.Properties["accountId"].value
         }
 
