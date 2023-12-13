@@ -5,7 +5,7 @@ Function Invoke-UpdateStatus {
             $response = Update-PSIntegrationStatus "pending"
             Write-Host "Response  ${response}"
         } catch {
-            Write-Error $_
+            Write-Host $_
             throw 'An error occurred while updating status. Script execution stopped.'
         }
     }
