@@ -10,7 +10,7 @@ Function Invoke-GetServiceIds {
             }
             return $skuServiceIds
         } catch {
-            Write-Error $_
+            Write-Host $_
             throw 'An error occurred while getting service IDs. Script execution stopped.'
         }
     }

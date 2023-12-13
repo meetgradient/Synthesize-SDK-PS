@@ -11,7 +11,8 @@
 try {
     Add-Type -AssemblyName System.Web -ErrorAction Ignore | Out-Null
     Add-Type -AssemblyName System.Net -ErrorAction Ignore | Out-Null
-} catch {
+}
+catch {
     Write-Verbose $_
 }
 
@@ -21,7 +22,7 @@ $ErrorActionPreference = 'Stop'
 # store the API client's configuration
 $Script:Configuration = [System.Collections.HashTable]@{}
 
-$Script:CmdletBindingParameters = @('Verbose','Debug','ErrorAction','WarningAction','InformationAction','ErrorVariable','WarningVariable','InformationVariable','OutVariable','OutBuffer','PipelineVariable')
+$Script:CmdletBindingParameters = @('Verbose', 'Debug', 'ErrorAction', 'WarningAction', 'InformationAction', 'ErrorVariable', 'WarningVariable', 'InformationVariable', 'OutVariable', 'OutBuffer', 'PipelineVariable')
 
 'Api', 'Model', 'Client', 'Private' | Get-ChildItem -Path {
     Join-Path $PSScriptRoot $_
@@ -29,8 +30,9 @@ $Script:CmdletBindingParameters = @('Verbose','Debug','ErrorAction','WarningActi
     Write-Debug "Importing file: $($_.BaseName)"
     try {
         . $_.FullName
-    } catch {
-        Write-Error -Message "Failed to import function $($_.Fullname): $_"
+    }
+    catch {
+        Write-Host -Message "Failed to import function $($_.Fullname): $_"
     }
 }
 
